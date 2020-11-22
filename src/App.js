@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react"
+import Login from "./Login"
+import ProtectedRoute from "./ProtectedRoute"
+import { login, logout } from "./utils/auth"
+import Admin from "./Admin"
 
-function App() {
+import {
+  Switch,
+  Route,
+  useHistory
+} from "react-router-dom";
+
+
+const App = () => {
+  const [credentials, setCredentials] = useState(null)
+  const history = useHistory()
+
+  const handleSetCredentials = (e) => {
+    setCredentials(prevCredentials => ({
+      ...prevCredentials,
+      [e.target.name]: e.target.value
+    }))
+  }
+
+  const handleLogin = async () => {
+    await login(credentials)
+    history.push('/admin')
+  }
+
+  const handleLogout = () => {
+    logout()
+    history.push('/login')
+  }
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Switch>
+    <Route path="/login">
+      <Login onLogin={handleLogin} onSetCredentials={handleSetCredentials} />
+    </Route>
+    <ProtectedRoute path="/admin" component={Admin} onLogout={handleLogout} />
+    
+    {/* <Route path="/">
+      <Home />
+    </Route> */}
+  </Switch>
   );
 }
 
