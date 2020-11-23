@@ -61,8 +61,9 @@ const login = async (credentials) => {
     Cookies.remove(`${APP_NAME}-auth-token`);
   }
 
-  const me = async () => {
+  const userContext = async () => {
     setAuthHeaders()
+    console.log('wesh')
     try {
         const data = await axios.get('/auth/me')
         return data
@@ -77,5 +78,6 @@ export {
     setAuthHeaders,
     login,
     logout,
+    userContext,
     decodeToken
  }

@@ -7,7 +7,8 @@ import Admin from "./Admin"
 import {
   Switch,
   Route,
-  useHistory
+  useHistory,
+  Redirect
 } from "react-router-dom";
 
 
@@ -39,10 +40,9 @@ const App = () => {
       <Login onLogin={handleLogin} onSetCredentials={handleSetCredentials} />
     </Route>
     <ProtectedRoute path="/admin" component={Admin} onLogout={handleLogout} />
-    
-    {/* <Route path="/">
-      <Home />
-    </Route> */}
+    <Route path="/">
+      <Redirect to="/login" />
+    </Route>
   </Switch>
   );
 }
