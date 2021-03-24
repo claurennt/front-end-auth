@@ -15,7 +15,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Box from "@material-ui/core/Box";
 import CircularProgress from "@material-ui/core/CircularProgress";
-import { userContext } from "../utils/user";
 
 const Copyright = () => {
   return (
@@ -149,32 +148,10 @@ const footers = [
 const Admin = ({ onLogout }) => {
   const classes = useStyles();
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const getContext = async () => {
-      try {
-        const { data: userData } = await userContext();
-        if (!userData) return onLogout();
-        console.log({ userData });
-        setUser(userData);
-      } catch (e) {
-        console.log({ getUserContextError: e.message });
-        return onLogout();
-      }
-    };
-    getContext();
-  }, [onLogout]);
+  const [user, setUser] = useState();
 
   return (
     <>
-      {!user ? (
-        <>
-          <Grid>
-            <CircularProgress />
-          </Grid>
-        </>
-      ) : (
         <React.Fragment>
           <CssBaseline />
           <AppBar
@@ -241,7 +218,7 @@ const Admin = ({ onLogout }) => {
               color="textPrimary"
               gutterBottom
             >
-              Welcome back {`${user.username.charAt(0).toUpperCase() + user.username.slice(1)}`}
+              Welcome back {user && `${user.username.charAt(0).toUpperCase() + user.username.slice(1)}`}
             </Typography>
             <Typography
               variant="h5"
@@ -347,7 +324,6 @@ const Admin = ({ onLogout }) => {
             </Box>
           </Container>
         </React.Fragment>
-      )}
     </>
   );
 }
