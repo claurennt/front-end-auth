@@ -19,20 +19,7 @@ const App = () => {
 
   return (
     <>
-      <Switch>
-        <Route path="/auth">
-          <Authentication
-            onAuth={() => {}}
-            onSetCredentials={handleSetCredentials}
-          />
-        </Route>
-        <Route path="/admin">
-          <Admin onLogout={() => {}}/>
-        </Route>
-        <Route path="/">
-          <Redirect to="/auth" />
-        </Route>
-      </Switch>
+      <Authentication />
     </>
   );
 };
