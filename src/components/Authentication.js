@@ -10,28 +10,15 @@ import Grid from "@material-ui/core/Grid";
 import OfflineBoltIcon from "@material-ui/icons/OfflineBolt";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
-import sheep from "../pics/sheep.jpg";
+import lofiGirl from "../pics/lofi-girl.jpg";
 
-const Copyright = () => {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="http://www.google.com">
-        Electric Sheep 🐑⚡
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-};
-
-const Authentication = () => {
+const Authentication = ({ handleLoginData, handleLoginRequest }) => {
   const useStyles = makeStyles((theme) => ({
     root: {
       height: "100vh",
     },
     image: {
-      backgroundImage: `url(${sheep})`,
+      backgroundImage: `url(${lofiGirl})`,
       backgroundRepeat: "no-repeat",
       backgroundColor:
         theme.palette.type === "light"
@@ -73,16 +60,21 @@ const Authentication = () => {
           <Typography component="h1" variant="h5">
             Sign In
           </Typography>
-          <form className={classes.form} noValidate>
+          <form
+            className={classes.form}
+            noValidate
+            onSubmit={handleLoginRequest}
+          >
             <TextField
               variant="outlined"
               margin="normal"
               required
               fullWidth
               id="username"
-              label="Username"
+              label="username"
               name="username"
               autoFocus
+              onChange={(e) => handleLoginData(e)}
             />
             <TextField
               variant="outlined"
@@ -93,13 +85,14 @@ const Authentication = () => {
               label="Password"
               type="password"
               id="password"
+              onChange={(e) => handleLoginData(e)}
             />
             <Button
-              onClick={() => {}}
               fullWidth
               variant="contained"
               color="primary"
               className={classes.submit}
+              type="submit"
             >
               Sign In
             </Button>
@@ -113,9 +106,7 @@ const Authentication = () => {
                 </Link>
               </Grid>
             </Grid>
-            <Box mt={5}>
-              <Copyright />
-            </Box>
+            <Box mt={5}></Box>
           </form>
         </div>
       </Grid>
