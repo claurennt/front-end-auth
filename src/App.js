@@ -18,10 +18,10 @@ const App = () => {
   //GET request to the protected endpoint in the backend to get information about the current user
   const getCurrentUserContext = useCallback(async () => {
     try {
-      const res = await client.get("/auth/currentUser");
-      console.log(res);
-      setCurrentUser(res.data);
-      navigate("/admin", { state: res.data });
+      const { data } = await client.get("/auth/currentUser");
+
+      setCurrentUser(data);
+      navigate("/admin", { state: data });
     } catch (err) {
       console.log("No user is authenticated at the moment", err.message);
     }
