@@ -21,7 +21,7 @@ const login = async (loginData) => {
     retrieves the x-authorization-token as token from the headers of the response */
     const {
       headers: { "x-authorization-token": token },
-    } = await client.post("auth/login", {
+    } = await client.post("users/login", {
       ...loginData,
     });
 
